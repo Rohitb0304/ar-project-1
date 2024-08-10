@@ -2,16 +2,74 @@
 <html>
 <head>
     <title>AR Video Display</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.7/aframe/build/aframe-ar.js"></script>
-    <script src="ar-marker-scan.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
+
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+    <!-- Define the marker and its pattern -->
+    <a-marker type="pattern" url="pattern-video.patt">
+        <!-- Plane to display the video -->
+        <a-plane id="videoPlane" position="0 0 0" rotation="-90 0 0" width="4" height="2.25"
+                 material="shader: flat; src: #videoTexture;">
+        </a-plane>
+    </a-marker>
+    
+    <!-- Define the camera entity -->
+    <a-entity camera></a-entity>
+</a-scene>
+
+<!-- Video element for texture -->
+<video id="videoTexture" src="https://res.cloudinary.com/dsgd7p4bc/video/upload/v1723298965/mov_bbb_sahf5p.mp4"
+       preload="auto" loop="true" muted="true" playsinline="true" crossorigin="anonymous" style="display: none;">
+</video>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const video = document.getElementById('videoTexture');
+        
+        // Check if the browser supports the video element
+        if (video.canPlayType) {
+            video.addEventListener('canplay', () => {
+                console.log('Video can play');
+                video.play().catch(error => {
+                    console.error('Video play error:', error);
+                    alert('Failed to play video. Please check browser permissions and settings.');
+                });
+            });
+
+            video.addEventListener('play', () => {
+                console.log('Video is playing');
+            });
+
+            video.addEventListener('error', (e) => {
+                console.error('Video error:', e);
+                alert('Error loading video. Please check the video URL and network connection.');
+            });
+
+            // Add marker event listeners to play and pause video
+            const marker = document.querySelector('a-marker');
+
+            marker.addEventListener('markerFound', () => {
+                console.log('Marker found');
+                video.play().catch(error => {
+                    console.error('Video play error:', error);
+                    alert('Failed to play video when marker is found.');
+                });
+            });
+
+            marker.addEventListener('markerLost', () => {
+                console.log('Marker lost');
+                video.pause();
+            });
+        } else {
+            console.error('Video element is not supported.');
+            alert('Your browser does not support video playback.');
+        }
+    });
+</script>
+
 </body>
 </html>
-<!-- 
-You can generate AR.js marker patterns using the AR.js Marker Training tool available at the following link:
-
-[AR.js Marker Training Tool](https://jeromeetienne.github.io/AR.js/three.js/examples/marker-training/examples/generator.html)
-
-This tool allows you to create custom marker patterns by uploading an image, which can then be downloaded and used in your AR projects. -->
