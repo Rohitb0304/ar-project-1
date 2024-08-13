@@ -21,6 +21,8 @@
         .social-icon {
             animation: bounce 2s infinite;
             cursor: pointer; /* Makes the social media icons clickable */
+            width: 50px; /* Define size of social media icons */
+            height: 50px;
         }
         .social-icons {
             opacity: 0;
@@ -88,13 +90,13 @@
         <!-- Social Media Icons -->
         <a-entity id="socialIcons" position="0 1.5 0" rotation="-90 0 0">
             <!-- Facebook Icon -->
-            <a-image src="#facebookIcon" position="-1.2 0 0.1" width="0.5" height="0.5" class="social-icon"
+            <a-image src="#facebookIcon" position="-1.2 0 0.1" class="social-icon"
                      onclick="window.open('https://facebook.com', '_blank');"></a-image>
             <!-- Twitter Icon -->
-            <a-image src="#twitterIcon" position="0 0 0.1" width="0.5" height="0.5" class="social-icon"
+            <a-image src="#twitterIcon" position="0 0 0.1" class="social-icon"
                      onclick="window.open('https://twitter.com', '_blank');"></a-image>
             <!-- Instagram Icon -->
-            <a-image src="#instagramIcon" position="1.2 0 0.1" width="0.5" height="0.5" class="social-icon"
+            <a-image src="#instagramIcon" position="1.2 0 0.1" class="social-icon"
                      onclick="window.open('https://instagram.com', '_blank');"></a-image>
         </a-entity>
     </a-marker>
@@ -197,24 +199,27 @@
                 });
                 socialIconsContainer.style.opacity = '0'; // Hide social icons initially
                 extraLinks.style.opacity = '0'; // Hide extra links initially
-                extraLinks.style.transform = 'translateY(-50%) scale(0)'; // Scale down and center
+                extraLinks.style.transform = 'translateY(-50%) scale(0)'; // Scale down initially
             });
 
             marker.addEventListener('markerLost', () => {
                 video.pause();
-                video.muted = true; // Mute video
-                socialIconsContainer.style.opacity = '1'; // Show social icons if marker is lost
-                socialIconsContainer.style.transform = 'translateX(-50%)'; // Reset position
+                video.currentTime = 0; // Reset video time
+                socialIconsContainer.style.opacity = '0'; // Hide social icons
                 extraLinks.style.opacity = '0'; // Hide extra links
-                extraLinks.style.transform = 'translateY(-50%) scale(0)'; // Reset scale
+                extraLinks.style.transform = 'translateY(-50%) scale(0)'; // Scale down
             });
-        } else {
-            console.error('Video element not supported');
+        }
+
+        // Function to play the video
+        function playVideo() {
+            if (video.paused) {
+                video.play().catch(error => {
+                    console.error('Video play error:', error);
+                });
+            }
         }
     });
 </script>
-
-</script>
-
 </body>
 </html>
