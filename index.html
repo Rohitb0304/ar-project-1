@@ -25,8 +25,7 @@
             height: 50px;
         }
         .social-icons {
-            opacity: 0;
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            opacity: 1; /* Always visible */
             position: absolute; /* Positioned absolutely within the scene */
             top: 10px;
             left: 50%;
@@ -37,12 +36,11 @@
             gap: 20px;
         }
         .extra-links {
-            opacity: 0;
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            opacity: 1; /* Always visible */
             position: fixed; /* Fixed position to stay visible on screen */
             right: 20px;
             top: 50%;
-            transform: translateY(-50%) scale(0); /* Center and scale down initially */
+            transform: translateY(-50%) scale(1); /* Center and scale up */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -118,14 +116,14 @@
 </a-assets>
 
 <!-- Additional Links -->
-<div class="extra-links" id="extraLinks">
+<div class="extra-links">
     <a href="mailto:rohit@edudiagno.com">rohit@edudiagno.com</a>
     <a href="tel:+91-9373380280">+91-9373380280</a>
     <a href="https://linkedin.com/in/rohit-bansode04" target="_blank">linkedin.com/in/rohit-bansode04</a>
 </div>
 
 <!-- Social Media Icons Container -->
-<div class="social-icons" id="socialIconsContainer">
+<div class="social-icons">
     <!-- Facebook Icon -->
     <img src="https://img.icons8.com/ios/50/000000/facebook.png" class="social-icon"
          onclick="window.open('https://facebook.com', '_blank');">
@@ -137,52 +135,29 @@
          onclick="window.open('https://instagram.com', '_blank');">
 </div>
 
-<script>    
+<script>
     document.addEventListener('DOMContentLoaded', () => {
         const video = document.getElementById('videoTexture');
         const socialIconsContainer = document.getElementById('socialIconsContainer');
         const extraLinks = document.getElementById('extraLinks');
 
-        const showSocialIcons = () => {
-            socialIconsContainer.style.opacity = '1'; // Show icons
-        };
+        // Function to play the video
+        function playVideo() {
+            if (video.paused) {
+                video.play().catch(error => {
+                    console.error('Video play error:', error);
+                });
+            }
+        }
 
-        const moveSocialIconsToRight = () => {
-            socialIconsContainer.style.opacity = '0'; // Hide icons initially
-            setTimeout(() => {
-                socialIconsContainer.style.transform = 'translateX(calc(100vw - 100px))'; // Move to the right side
-                socialIconsContainer.style.opacity = '1'; // Show icons at new position
-            }, 1000); // Move after 1-second delay
-        };
-
-        const showExtraLinks = () => {
-            extraLinks.style.opacity = '1'; // Make extra links visible
-            extraLinks.style.transform = 'translateY(-50%) scale(1)'; // Scale up and center
-        };
-
+        // Video setup
         if (video.canPlayType) {
-            // Initial setup
             video.muted = true; // Mute video initially
             video.addEventListener('canplay', () => {
                 // Video is ready to play
                 video.play().catch(error => {
                     console.error('Video play error:', error);
                 });
-            });
-
-            video.addEventListener('play', () => {
-                // Video is playing
-                console.log('Video is playing');
-                // Show social icons initially
-                showSocialIcons();
-                // Delay the move of social icons by 1 second
-                setTimeout(() => {
-                    moveSocialIconsToRight();
-                    // Delay the appearance of extra links by 1 additional second (total 2 seconds after video starts)
-                    setTimeout(() => {
-                        showExtraLinks();
-                    }, 1000); // 1-second delay after social icons move
-                }, 1000); // 1-second delay after video starts
             });
 
             video.addEventListener('error', (e) => {
@@ -197,27 +172,12 @@
                 video.play().catch(error => {
                     console.error('Video play error:', error);
                 });
-                socialIconsContainer.style.opacity = '0'; // Hide social icons initially
-                extraLinks.style.opacity = '0'; // Hide extra links initially
-                extraLinks.style.transform = 'translateY(-50%) scale(0)'; // Scale down initially
             });
 
             marker.addEventListener('markerLost', () => {
                 video.pause();
                 video.currentTime = 0; // Reset video time
-                socialIconsContainer.style.opacity = '0'; // Hide social icons
-                extraLinks.style.opacity = '0'; // Hide extra links
-                extraLinks.style.transform = 'translateY(-50%) scale(0)'; // Scale down
             });
-        }
-
-        // Function to play the video
-        function playVideo() {
-            if (video.paused) {
-                video.play().catch(error => {
-                    console.error('Video play error:', error);
-                });
-            }
         }
     });
 </script>
