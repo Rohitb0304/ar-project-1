@@ -21,13 +21,13 @@
         .social-icon {
             animation: bounce 2s infinite;
             cursor: pointer; /* Makes the social media icons clickable */
-            width: 50px; /* Define size of social media icons */
+            width: 50px; /* Default size for social media icons */
             height: 50px;
         }
         .social-icons {
             opacity: 1; /* Always visible */
-            position: absolute; /* Positioned absolutely within the scene */
-            top: 10px;
+            position: fixed; /* Fixed position to stay at the bottom */
+            bottom: 20px; /* Distance from the bottom of the screen */
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
@@ -39,8 +39,8 @@
             opacity: 1; /* Always visible */
             position: fixed; /* Fixed position to stay visible on screen */
             right: 20px;
-            top: 50%;
-            transform: translateY(-50%) scale(1); /* Center and scale up */
+            bottom: 100px; /* Distance from the bottom to make room for the social icons */
+            transform: translateY(0) scale(1); /* Center and scale up */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -53,7 +53,7 @@
             margin: 10px 0;
             color: white;
             text-decoration: none;
-            font-size: 24px; /* Larger text size */
+            font-size: 18px; /* Smaller text size */
             font-weight: bold;
             transition: transform 0.5s ease-in-out;
         }
@@ -69,6 +69,15 @@
             }
             60% {
                 transform: translateY(-15px);
+            }
+        }
+        @media (max-width: 600px) {
+            .social-icon {
+                width: 30px; /* Smaller size for mobile view */
+                height: 30px;
+            }
+            .extra-links a {
+                font-size: 16px; /* Smaller text size for mobile view */
             }
         }
     </style>
@@ -138,8 +147,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const video = document.getElementById('videoTexture');
-        const socialIconsContainer = document.getElementById('socialIconsContainer');
-        const extraLinks = document.getElementById('extraLinks');
 
         // Function to play the video
         function playVideo() {
