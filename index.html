@@ -26,8 +26,8 @@
         }
         .social-icons {
             opacity: 1; /* Always visible */
-            position: fixed; /* Fixed position to stay at the bottom */
-            bottom: 20px; /* Distance from the bottom of the screen */
+            position: fixed; /* Fixed position to stay at the top */
+            top: 100px; /* Distance from the top of the screen */
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
@@ -39,7 +39,7 @@
             opacity: 1; /* Always visible */
             position: fixed; /* Fixed position to stay visible on screen */
             right: 20px;
-            bottom: 100px; /* Distance from the bottom to make room for the social icons */
+            bottom: 20px; /* Distance from the bottom of the screen */
             transform: translateY(0) scale(1); /* Center and scale up */
             display: flex;
             flex-direction: column;
@@ -93,19 +93,6 @@
         <a-plane id="videoPlane" position="0 0 0" rotation="-90 0 0" width="4" height="2.25"
                  material="shader: flat; src: #videoTexture;" onclick="playVideo();">
         </a-plane>
-        
-        <!-- Social Media Icons -->
-        <a-entity id="socialIcons" position="0 1.5 0" rotation="-90 0 0">
-            <!-- Facebook Icon -->
-            <a-image src="#facebookIcon" position="-1.2 0 0.1" class="social-icon"
-                     onclick="window.open('https://facebook.com', '_blank');"></a-image>
-            <!-- Twitter Icon -->
-            <a-image src="#twitterIcon" position="0 0 0.1" class="social-icon"
-                     onclick="window.open('https://twitter.com', '_blank');"></a-image>
-            <!-- Instagram Icon -->
-            <a-image src="#instagramIcon" position="1.2 0 0.1" class="social-icon"
-                     onclick="window.open('https://instagram.com', '_blank');"></a-image>
-        </a-entity>
     </a-marker>
     
     <!-- Define the camera entity -->
@@ -124,13 +111,6 @@
     <img id="instagramIcon" src="https://img.icons8.com/ios/50/000000/instagram.png" crossorigin="anonymous" />
 </a-assets>
 
-<!-- Additional Links -->
-<div class="extra-links">
-    <a href="mailto:rohit@edudiagno.com">rohit@edudiagno.com</a>
-    <a href="tel:+91-9373380280">+91-9373380280</a>
-    <a href="https://linkedin.com/in/rohit-bansode04" target="_blank">linkedin.com/in/rohit-bansode04</a>
-</div>
-
 <!-- Social Media Icons Container -->
 <div class="social-icons">
     <!-- Facebook Icon -->
@@ -142,6 +122,13 @@
     <!-- Instagram Icon -->
     <img src="https://img.icons8.com/ios/50/000000/instagram.png" class="social-icon"
          onclick="window.open('https://instagram.com', '_blank');">
+</div>
+
+<!-- Additional Links -->
+<div class="extra-links">
+    <a href="mailto:rohit@edudiagno.com">rohit@edudiagno.com</a>
+    <a href="tel:+91-9373380280">+91-9373380280</a>
+    <a href="https://linkedin.com/in/rohit-bansode04" target="_blank">linkedin.com/in/rohit-bansode04</a>
 </div>
 
 <script>
