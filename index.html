@@ -1,0 +1,199 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      .icon {
+        margin: 5px;
+        color: white;
+        font-size: 24px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      }
+      .icon:hover {
+        color: #52d6f4;
+        filter: drop-shadow(0 0 10px #52d6f4);
+      }
+      .icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .glow {
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+      }
+      .animated-text {
+        animation: fadeIn 1s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a-scene
+      mindar-image="imageTargetSrc: targets-2.mind;"
+      color-space="sRGB"
+      renderer="colorManagement: true, physicallyCorrectLights"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+    >
+      <a-assets>
+        <img id="card" src="1.png" />
+        <!-- Icons8 Icons -->
+        <img
+          id="facebook-icon"
+          src="https://img.icons8.com/ios/50/000000/facebook.png"
+        />
+        <img
+          id="twitter-icon"
+          src="https://img.icons8.com/ios/50/000000/twitter.png"
+        />
+        <img
+          id="linkedin-icon"
+          src="https://img.icons8.com/ios/50/000000/linkedin.png"
+        />
+        <img
+          id="instagram-icon"
+          src="https://img.icons8.com/ios/50/000000/instagram-new.png"
+        />
+      </a-assets>
+
+      <a-camera
+        position="0 0 0"
+        look-controls="enabled: false"
+      ></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <!-- Original Card -->
+        <a-plane
+          src="#card"
+          position="0 0 0"
+          height="0.552"
+          width="1"
+          rotation="0 0 0"
+        ></a-plane>
+
+        <!-- Sliding Card -->
+        <a-entity position="0 0 0" visible="false" id="detailsCard">
+          <a-plane
+            color="#5E5E5E"
+            width="1"
+            height="0.7"
+            material="shader: flat"
+            position="0 0 0.06"
+            class="animated-text"
+          >
+            <a-text
+              value="We make the books alive"
+              color="#FFF"
+              position="0 0.25 0.02"
+              align="center"
+              width="1.8"
+              class="animated-text"
+            ></a-text>
+            <a-text
+              value="books and all"
+              color="#FFF"
+              position="0 0.1 0.02"
+              align="center"
+              width="1.6"
+              class="animated-text"
+            ></a-text>
+            <a-text
+              value="Connect with me:"
+              color="#FFF"
+              position="0 -0.1 0.02"
+              align="center"
+              width="1.2"
+              class="animated-text"
+            ></a-text>
+            
+            <!-- Icons -->
+            <a-entity id="socialIcons" visible="false" position="0 -0.25 0" class="icon-container">
+              <a-image
+                src="#facebook-icon"
+                position="-0.35 0 0"
+                width="0.08"
+                height="0.08"
+                class="icon glow"
+                onclick="window.open('https://facebook.com', '_blank')"
+              ></a-image>
+              <a-image
+                src="#twitter-icon"
+                position="-0.15 0 0"
+                width="0.08"
+                height="0.08"
+                class="icon glow"
+                onclick="window.open('https://twitter.com', '_blank')"
+              ></a-image>
+              <a-image
+                src="#linkedin-icon"
+                position="0.05 0 0"
+                width="0.08"
+                height="0.08"
+                class="icon glow"
+                onclick="window.open('https://linkedin.com', '_blank')"
+              ></a-image>
+              <a-image
+                src="#instagram-icon"
+                position="0.25 0 0"
+                width="0.08"
+                height="0.08"
+                class="icon glow"
+                onclick="window.open('https://instagram.com', '_blank')"
+              ></a-image>
+            </a-entity>
+          </a-plane>
+        </a-entity>
+      </a-entity>
+    </a-scene>
+
+    <script>
+      AFRAME.registerComponent('card-animation', {
+        init: function () {
+          const el = this.el;
+          const detailsCard = document.querySelector('#detailsCard');
+          const socialIcons = document.querySelector('#socialIcons');
+
+          el.addEventListener('targetFound', () => {
+            detailsCard.setAttribute('visible', 'true');
+            detailsCard.setAttribute('animation', {
+              property: 'position',
+              from: '0 0 0',
+              to: '1 0 0',
+              dur: 1000,
+              easing: 'easeInOutQuad'
+            });
+
+            // After the card animation, show icons
+            setTimeout(() => {
+              socialIcons.setAttribute('visible', 'true');
+              socialIcons.setAttribute('animation', {
+                property: 'position',
+                from: '0 -0.25 0',
+                to: '0 -0.8 0',
+                dur: 1000,
+                easing: 'easeInOutQuad'
+              });
+            }, 1000); // Delay to match the card sliding animation
+          });
+
+          el.addEventListener('targetLost', () => {
+            detailsCard.setAttribute('visible', 'false');
+            socialIcons.setAttribute('visible', 'false');
+          });
+        }
+      });
+
+      document
+        .querySelector('a-entity[mindar-image-target]')
+        .setAttribute('card-animation', '');
+    </script>
+  </body>
+</html>
