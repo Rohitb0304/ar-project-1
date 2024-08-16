@@ -6,21 +6,15 @@
     <style>
       .icon {
         margin: 5px;
-        color: white;
-        font-size: 24px;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
       }
       .icon:hover {
-        color: #52d6f4;
-        filter: drop-shadow(0 0 10px #52d6f4);
+        filter: drop-shadow(0 0 12px #52d6f4);
       }
       .icon-container {
         display: flex;
         justify-content: center;
         align-items: center;
-      }
-      .glow {
-        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
       }
       .animated-text {
         animation: fadeIn 1s ease-out;
@@ -32,6 +26,14 @@
         to {
           opacity: 1;
         }
+      }
+      .link {
+        color: #FFF;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .link:hover {
+        color: #52d6f4;
       }
     </style>
   </head>
@@ -98,7 +100,7 @@
               class="animated-text"
             ></a-text>
             <a-text
-              value="books and all"
+              value="Books and all"
               color="#FFF"
               position="0 0.1 0.02"
               align="center"
@@ -121,7 +123,7 @@
                 position="-0.35 0 0"
                 width="0.08"
                 height="0.08"
-                class="icon glow"
+                class="icon"
                 onclick="window.open('https://facebook.com', '_blank')"
               ></a-image>
               <a-image
@@ -129,7 +131,7 @@
                 position="-0.15 0 0"
                 width="0.08"
                 height="0.08"
-                class="icon glow"
+                class="icon"
                 onclick="window.open('https://twitter.com', '_blank')"
               ></a-image>
               <a-image
@@ -137,7 +139,7 @@
                 position="0.05 0 0"
                 width="0.08"
                 height="0.08"
-                class="icon glow"
+                class="icon"
                 onclick="window.open('https://linkedin.com', '_blank')"
               ></a-image>
               <a-image
@@ -145,10 +147,48 @@
                 position="0.25 0 0"
                 width="0.08"
                 height="0.08"
-                class="icon glow"
+                class="icon"
                 onclick="window.open('https://instagram.com', '_blank')"
               ></a-image>
             </a-entity>
+
+            <!-- Email and Phone Links -->
+            <a-text
+              value="Email: "
+              color="#FFF"
+              position="-0.5 -0.4 0.02"
+              align="left"
+              width="1.2"
+              class="animated-text"
+            ></a-text>
+            <a-text
+              value="your.email@example.com"
+              color="#52d6f4"
+              position="0 -0.4 0.02"
+              align="left"
+              width="1.2"
+              class="animated-text"
+              onclick="window.open('mailto:your.email@example.com', '_blank')"
+              class="link"
+            ></a-text>
+            <a-text
+              value="Phone: "
+              color="#FFF"
+              position="-0.5 -0.5 0.02"
+              align="left"
+              width="1.2"
+              class="animated-text"
+            ></a-text>
+            <a-text
+              value="+1234567890"
+              color="#52d6f4"
+              position="0 -0.5 0.02"
+              align="left"
+              width="1.2"
+              class="animated-text"
+              onclick="window.open('tel:+1234567890', '_blank')"
+              class="link"
+            ></a-text>
           </a-plane>
         </a-entity>
       </a-entity>
